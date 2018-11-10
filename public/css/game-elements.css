@@ -1,0 +1,39 @@
+@keyframes zooming-castel {
+    0% {
+        transform: scale(1.0);
+    }
+    100% {
+        transform: scale(1.5);
+    }
+}
+.castel-img{
+	display: none;
+	animation: zooming-castel 0.5s linear;
+}
+.p1-castel-img{
+	height: 150px;
+	width: 150px;
+	position: absolute;	
+}
+.p2-castel-img{
+	height: 150px;
+	width: 150px;
+	bottom: 30px;
+	right:0;
+	position: absolute;	
+}
+@media(max-width: 768px){
+	.p1-castel-img{
+		height: 50px;
+		width: 50px;
+		position: relative;	
+	}
+	.p2-castel-img{
+		height: 50px;
+		width: 50px;
+		bottom: 0px;
+		float: right;
+		position: relative;
+	}
+
+}

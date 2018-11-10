@@ -1,0 +1,42 @@
+body{
+	background:#cccccc;
+	background-image: linear-gradient(to bottom, #2d007e, #1d0d61, #150f43, #110b26, #030303);
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 100vh;
+}
+.game-footer{
+	height: 50px;
+	width: 100%;
+	color: #fff;
+	text-align: center;
+	padding: 20px;
+	font-weight: 600;
+	font-size: 20px;
+	background: black;
+}
+.allSides/*crazydreamer*/
+{
+box-shadow: 0 0 10px rgba(0,0,0,0.6);
+-moz-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+-o-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+.allSidesSoft/*crazydreamer*/
+{
+  box-shadow:0 3px 10px 0 rgba(115,143,147,.3);
+}
+
+::-webkit-scrollbar {
+    width: 5px;  
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(to bottom, #ff0000, #ff0050, #f70091, #bd00d0, #0045ff);
+}
+
+@media(max-width: 768px){
+	.game-footer{
+		margin-top: 50px;
+	}
+}

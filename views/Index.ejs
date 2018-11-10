@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The Empire On Dice</title>
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css"> 
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/dice.css">
+  <link rel="stylesheet" type="text/css" href="css/board.css">
+  <link rel="stylesheet" type="text/css" href="css/game-elements.css">
+
+</head>
+<body onload="initGame()">
+
+
+<br>
+
+
+<div class="dice-main-body first-dice-main">
+
+</div>
+
+<div class="dice-main-body second-dice-main">
+
+</div>
+<img src="img/game_img/castel.svg" class="p1-castel-img castel-img">
+
+<table id='game-board' class="allSides">
+</table>
+
+<audio id="introSound" src="/sound/intro.mp3"></audio>
+<audio id="putSound" src="/sound/put.mp3"></audio>
+<img src="img/game_img/castel.svg" class="p2-castel-img castel-img">
+<!-- 
+<br>  
+<br>
+<footer class="game-footer"></footer> 
+-->
+<script src="https://unpkg.com/notie"></script>
+<script src="js/game.js"></script>
+<script src="js/elements.js"></script>
+</body>
+</html>
