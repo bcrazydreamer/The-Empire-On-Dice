@@ -4,6 +4,7 @@ var cookieParser            = require('cookie-parser');
 var bodyParser              = require('body-parser');
 var session                 = require('express-session');
 var index                   = require('./routes/index');
+var port                    = process.env.PORT || 3000;
 
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
@@ -36,3 +37,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+app.listen(port);
