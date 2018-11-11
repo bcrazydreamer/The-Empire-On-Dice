@@ -4,15 +4,16 @@ var cookieParser            = require('cookie-parser');
 var bodyParser              = require('body-parser');
 var session                 = require('express-session');
 var index                   = require('./routes/index');
-var port                    = process.env.PORT || 3000;
 
+console.log(path.join(__dirname),'_______________________________');
+console.log(path.join(__dirname,'../'),'+++++++++++++++++++++++++++++++');
 var app = express();
-app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', index);
@@ -37,4 +38,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-app.listen(port);
