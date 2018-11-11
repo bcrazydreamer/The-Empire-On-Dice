@@ -15,6 +15,10 @@ var introSoundPlaying = true;
 var block_moving = false;
 var fx_On = true;
 var dice_rolled = false;
+var filledBlocks = [];
+var move_possible = true;
+var plr1_area = [];
+var plr2_area = [];
 function initGame(){
 	$.confirm({
     title: '"The Empire On Dice"',
@@ -28,7 +32,7 @@ function initGame(){
            		$('#drop-block-btn').attr('disabled','true');
               	introSoundEvent = setInterval(function(){
               		$('.castel-img').css('display','inline');
-					$("#introSound")[0].play();
+					//$("#introSound")[0].play();
 				}, 10);
             }
           }
@@ -36,7 +40,6 @@ function initGame(){
   });
 }
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-	$('.mobile-btns').css('display','inline');
  	var game_row = 25;
 	var game_col = 20;
 	createBoard();
@@ -65,6 +68,34 @@ function createBoard(){
 	}	
 }
 
+function isTouchedWithHome(block,plr){
+	var arr = (plr==1) ? plr1_area : plr2_area;
+	flag = false;
+	for(var i = 0 ; i < arr.length ; i++){
+		var dif = Math.abs(block-arr[i]);
+		if( dif == game_col){
+			flag = true;
+			break;
+		}else if(dif == 1){
+			if((arr[i] % game_col) == 0){
+				if((arr[i] - block) < 0 ){
+					flag = false;
+					break;
+				}
+			}else if((block % game_col) == 0){
+				if((arr[i] - block) > 0 ){
+					flag = false;
+					break;
+				}
+			}else{
+				flag = true;
+				break;
+			}
+		}
+	}
+	return flag;
+}
+
 function createEmpire(x,y,l,b,plr){
 	$('.placed-block').css('opacity','1');
 	color = (plr==1) ? 'red' : 'blue';
@@ -72,6 +103,12 @@ function createEmpire(x,y,l,b,plr){
 	for(var i=x+1 ; i <= x+l ; i++){
 		for(var k=x+1 ; k <= x+b ; k++){
 			var inc = game_col*y+k;
+			filledBlocks.push(inc);
+			if(plr==1){
+				plr1_area.push(inc);
+			}else{
+				plr2_area.push(inc);
+			}
 			element = $('td[data-pos="'+inc+'"]');
 			element.addClass('placed-block');
 			element.addClass(block_owner);
@@ -144,14 +181,31 @@ function CheckEmpire(x,y,l,b,key_state,plr){
 	block_moving = true;
 	$('td').removeClass('check-location-1');
 	$('td').removeClass('check-location-2');
+	move_possible = true;
+	home_touch = false;
 	for(var i=x+1 ; i <= x+l ; i++){
 		for(var k=x+1 ; k <= x+b ; k++){
 			var inc = game_col*y+k;
+			if(filledBlocks.indexOf(inc)>=0){
+				$('#drop-block-btn').attr('disabled','true');
+				move_possible = false;
+			}
+			if(!home_touch){
+				home_touch = isTouchedWithHome(inc,plr);
+			}
 			element = $('td[data-pos="'+inc+'"]');
 			element.css('opacity','1');
 			element.addClass('check-location-'+plr);
 		}
 		y = y+1;
+	}
+	if(!home_touch){
+		$('#drop-block-btn').attr('disabled','true');
+	}
+	if(move_possible && home_touch){
+		move_possible = true;
+	}else{
+		move_possible = false;
 	}
 	valid_x = x;
 	valid_y = y-l;
@@ -290,6 +344,8 @@ function actionOnEvents(key){
         	if(!new_turn_1){
 	        	t_x = c_x_1 = c_x_1;
 	        	t_y = c_y_1 = c_y_1-1;
+	        	t_p = c_turn;
+       			CheckEmpire(t_x,t_y,l,b,key_state,t_p);
 	        }else{
 	        	t_x = c_x_1;
 	        	t_y = c_y_1;
@@ -302,6 +358,8 @@ function actionOnEvents(key){
         	if(!new_turn_2){
 	        	t_x = c_x_2 = c_x_2;
 	        	t_y = c_y_2 = c_y_2-1;
+	        	t_p = c_turn;
+       			CheckEmpire(t_x,t_y,l,b,key_state,t_p);
 	        }else{
 	        	t_x = c_x_2;
 	        	t_y = c_y_2;
@@ -311,8 +369,6 @@ function actionOnEvents(key){
 	        	new_turn_2 = false;
 	        }
         }
-        t_p = c_turn;
-        CheckEmpire(t_x,t_y,l,b,key_state,t_p)
 	}else if( key == '40' && GameStarted && dice_rolled ){
 		// down arrow
         key_state = 1;
@@ -409,7 +465,7 @@ function actionOnEvents(key){
 	        	new_turn_2 = false;
 	        }
 	    }	
-	}else if( key == '82' && GameStarted ){
+	}else if( key == '82' && GameStarted && (!dice_rolled)){
 		$('.dice-main-body').css('display','block');
     	roll_dise();
     	t1 = l = (Math.floor(Math.random() * 6) + 1);
@@ -425,7 +481,7 @@ function actionOnEvents(key){
 		},2000);
 		dice_rolled = true;
 		$('#roll-block-btn').attr('disabled','true');
-	}else if( key == '13' && block_moving && GameStarted && dice_rolled ){
+	}else if( key == '13' && block_moving && GameStarted && dice_rolled && move_possible ){
 		t_p = c_turn;
     	c_turn = (c_turn==1) ? 2 : 1;
     	createEmpire(valid_x,valid_y,l,b,t_p);
@@ -482,7 +538,7 @@ function checkKey(e) {
     	actionOnEvents('80');
     }
     else if(e.keyCode=='70' && GameStarted){
-    	//key is p to play and stop intro music
+    	//key is f to play and stop intro music
     	actionOnEvents('70');
     }
 }

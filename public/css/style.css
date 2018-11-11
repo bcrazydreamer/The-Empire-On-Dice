@@ -3,7 +3,6 @@ body{
 	background-image: linear-gradient(to bottom, #2d007e, #1d0d61, #150f43, #110b26, #030303);
 	background-repeat: no-repeat;
 	background-position: center;
-	height: 100vh;
 }
 .game-footer{
 	height: 50px;
@@ -38,8 +37,5 @@ box-shadow: 0 0 10px rgba(0,0,0,0.6);
 @media(max-width: 768px){
 	.game-footer{
 		margin-top: 50px;
-	}
-	body{
-		height: 90vh;
 	}
 }
