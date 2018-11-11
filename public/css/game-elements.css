@@ -1,14 +1,41 @@
 @keyframes zooming-castel {
     0% {
-        transform: scale(1.0);
+        transform: scale(0);
+    }
+    10% {
+        transform: scale(0.1);
+    }
+    20% {
+        transform: scale(0.2);
+    }
+    30% {
+        transform: scale(0.3);
+    }
+    40% {
+        transform: scale(0.4);
+    }
+    50% {
+        transform: scale(0.5);
+    }
+    60% {
+        transform: scale(0.6);
+    }
+    70% {
+        transform: scale(0.7);
+    }
+    80% {
+        transform: scale(0.8);
+    }
+    90% {
+        transform: scale(0.9);
     }
     100% {
-        transform: scale(1.5);
+        transform: scale(1);
     }
 }
 .castel-img{
 	display: none;
-	animation: zooming-castel 0.5s linear;
+	animation: zooming-castel 1s linear;
 }
 .p1-castel-img{
 	height: 150px;
@@ -21,6 +48,10 @@
 	bottom: 30px;
 	right:0;
 	position: absolute;	
+}
+.sound-setting-icon{
+    height: 20px;
+    width: 20px;
 }
 @media(max-width: 768px){
 	.p1-castel-img{

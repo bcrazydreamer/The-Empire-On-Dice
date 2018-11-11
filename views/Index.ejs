@@ -28,13 +28,35 @@
 <div class="dice-main-body second-dice-main">
 
 </div>
-<img src="img/game_img/castel.svg" class="p1-castel-img castel-img">
+<div class="dropdown mobile-btns setting-block-btn-style">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+      <span class="glyphicon glyphicon-wrench"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li id="change-music-setting">
+        <a href="#">
+          <img src="img/game_img/sound-on.svg" class="sound-setting-icon" id="music-setting-img">
+          &nbsp;&nbsp;Music
+        </a>
+      </li>
+      <li id="change-fx-setting">
+        <a href="#">
+          <img src="img/game_img/sound-on.svg" class="sound-setting-icon" id="fx-setting-img">
+          &nbsp;&nbsp;FX
+        </a>
+      </li>
+    </ul>
+</div>
+<button class="btn btn-success mobile-btns roll-block-btn-style" id="roll-block-btn">Roll</button>
+<button class="btn btn-success mobile-btns drop-block-btn-style" id="drop-block-btn">Drop</button>
 
+<img src="img/game_img/castel.svg" class="p1-castel-img castel-img">
 <table id='game-board' class="allSides">
 </table>
 
 <audio id="introSound" src="/sound/intro.mp3"></audio>
 <audio id="putSound" src="/sound/put.mp3"></audio>
+<audio id="diceRollSound" src="/sound/dice_roll.mp3"></audio>
 <img src="img/game_img/castel.svg" class="p2-castel-img castel-img">
 <!-- 
 <br>  

@@ -39,4 +39,7 @@ box-shadow: 0 0 10px rgba(0,0,0,0.6);
 	.game-footer{
 		margin-top: 50px;
 	}
+	body{
+		height: 90vh;
+	}
 }

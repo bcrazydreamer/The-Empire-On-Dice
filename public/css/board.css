@@ -1,3 +1,122 @@
+@keyframes blink {
+    0% {
+        border-color : rgba(255, 255, 0 ,1)
+    }
+    10% {
+        border-color : rgba(255, 255, 0 ,0.8)
+    }
+    20% {
+        border-color : rgba(255, 255, 0 ,0.6)
+    }
+    30% {
+        border-color : rgba(255, 255, 0 ,0.4)
+    }
+    40% {
+        border-color : rgba(255, 255, 0 ,0.2)
+    }
+    50% {
+        border-color : rgba(255, 255, 0 ,0.0)
+    }
+    60% {
+        border-color : rgba(255, 255, 0 ,0.2)
+    }
+    70% {
+        border-color : rgba(255, 255, 0 ,0.4)
+    }
+    80% {
+        border-color : rgba(255, 255, 0 ,0.6)
+    }
+    90% {
+        border-color : rgba(255, 255, 0 ,0.8)
+    }
+    100% {
+        border-color : rgba(255, 255, 0 ,1)
+    }
+}
+
+@keyframes blink-element {
+    0% {
+      opacity: 1;
+    }
+    5% {
+      opacity: 0.9;
+    }
+    10% {
+      opacity: 0.8;
+    }
+    15% {
+      opacity: 0.7;
+    }
+    20% {
+      opacity: 0.6;
+    }
+    25% {
+      opacity: 0.5;
+    }
+    30% {
+      opacity: 0.4;
+    }
+    35% {
+      opacity: 0.3;
+    }
+    40% {
+      opacity: 0.2;
+    }
+    45% {
+      opacity: 0.1;
+    }
+    50% {
+      opacity: 0;
+    }
+    55% {
+      opacity: 0.1;
+    }
+    60% {
+      opacity: 0.2;
+    }
+    65% {
+      opacity: 0.3;
+    }
+    70% {
+      opacity: 0.4;
+    }
+    75% {
+      opacity: 0.5;
+    }
+    80% {
+      opacity: 0.6;
+    }
+    85% {
+      opacity: 0.7;
+    }
+    90% {
+      opacity: 0.8;
+    }
+    95% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 1;
+    }
+}
+.mobile-btns{
+  display: none;
+}
+.drop-block-btn-style{
+  position: absolute;
+  right: 40%;
+}
+
+.roll-block-btn-style{
+  position: absolute;
+  right: 20%;
+}
+.setting-block-btn-style{
+  position: absolute;
+  right: 0;
+  margin-right: 2px;
+}
+
 table { 
   border-collapse: collapse; 
   border-spacing: 0; 
@@ -33,15 +152,14 @@ table {
   border:1px solid #ddd;
 }
 
-.active-left{
-  border-left:4px solid yellow !important;
+.active-blocks{
+  transition:all 0.5s ease-in-out;
+  animation:blink-element normal 2.0s infinite ease-in-out;
 }
-.active-top{
-  border-top:4px solid yellow !important;
-}
-.active-right{
-  border-right:4px solid yellow !important;
-}
-.active-bottom{
-  border-bottom:4px solid yellow !important;
+@media(max-width: 768px){
+  #game-board tr td { 
+    width: 17px; 
+    height: 17px; 
+  }
+
 }
