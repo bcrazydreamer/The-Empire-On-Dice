@@ -32,7 +32,7 @@ function initGame(){
            		$('#drop-block-btn').attr('disabled','true');
               	introSoundEvent = setInterval(function(){
               		$('.castel-img').css('display','inline');
-					//$("#introSound")[0].play();
+					$("#introSound")[0].play();
 				}, 10);
             }
           }
