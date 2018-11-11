@@ -6,9 +6,8 @@ var session                 = require('express-session');
 var index                   = require('./routes/index');
 
 console.log(path.join(__dirname),'_______________________________');
-console.log(path.join(__dirname,'../'),'+++++++++++++++++++++++++++++++');
 var app = express();
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
