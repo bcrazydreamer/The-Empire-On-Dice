@@ -91,6 +91,9 @@ function createEmpire(x,y,l,b,plr){
 function CheckEmpire(x,y,l,b,key_state,plr){
 	$('td').removeClass('active-blocks');
 	$('.placed-block').css('opacity','0.5');
+	if(fx_On){
+    	$("#MoveBlockSound")[0].play();
+    }
 	color = (plr==1) ? 'red' : 'blue';
 	if(key_state==0){ //up
 		if(!(y>=0)){
