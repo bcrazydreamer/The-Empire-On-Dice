@@ -58,8 +58,10 @@
   <div class="container"style="padding-top:100px">
         <center>
         <div class="alert allSides" style="background:#222D3C;color:#fff;">
-          <p>
-            <strong><%= error %></strong>
+          <p><%= error %>
+            <strong><script type="text/javascript">
+              console.log("<%= error %>");
+            </script></strong>
           </p></div>
         </center>
   </div>
