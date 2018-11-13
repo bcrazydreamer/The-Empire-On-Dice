@@ -3,11 +3,17 @@
 <head>
   <title>The Empire On Dice</title>
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="icon" type="image/png" href="img/game_img/icon.png">
+  <meta name="description" content="A basic strategy game based on math. This game is devloped by BCrazyDreamer.">
+  <meta name="Keywords" content="game,videos,trending,top,html,css,nodejs,javascript,programming">
+  <meta property="og:image" content="img/game_img/icon.png">
+
+  <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css"> 
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+  <link rel="stylesheet" type="text/css" href="plugin/css/notie.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" type="text/css" href="css/dice.css">
@@ -24,44 +30,62 @@
 <div class="dice-main-body second-dice-main">
 
 </div>
-<div class="dropdown mobile-btns setting-block-btn-style">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+<div style="text-align: center;">
+<button class="btn roll-block-btn-style game-btns" id="roll-block-btn">Roll</button>
+<button class="btn drop-block-btn-style game-btns" id="drop-block-btn">Drop</button>
+<div class="dropdown setting-block-btn-style">
+    <button class="btn btn-primary dropdown-toggle game-btns" type="button" data-toggle="dropdown">
       <span class="glyphicon glyphicon-wrench"></span>
     </button>
     <ul class="dropdown-menu dropdown-menu-right">
       <li id="change-music-setting">
         <a href="#">
-          <img src="img/game_img/sound-on.svg" class="sound-setting-icon" id="music-setting-img">
+          <img src="img/game_img/sound-on.svg" class="sound-setting-icon" id="music-setting-img" onerror="imageNotFound(this,2)">
           &nbsp;&nbsp;Music
         </a>
       </li>
       <li id="change-fx-setting">
         <a href="#">
-          <img src="img/game_img/sound-on.svg" class="sound-setting-icon" id="fx-setting-img">
+          <img src="img/game_img/sound-on.svg" class="sound-setting-icon" id="fx-setting-img" onerror="imageNotFound(this,2)">
           &nbsp;&nbsp;FX
         </a>
       </li>
     </ul>
+  </div>
 </div>
-<button class="btn btn-success mobile-btns roll-block-btn-style" id="roll-block-btn">Roll</button>
-<button class="btn btn-success mobile-btns drop-block-btn-style" id="drop-block-btn">Drop</button>
 
-<img src="img/game_img/castel.svg" class="p1-castel-img castel-img">
+<div style="width: 100%;text-align: center;padding: 20px;position: absolute;">
+  <p class="score-counter badge plr1-counter plr1-counter-mobile">
+    0
+  </p>
+</div>
+
+<img src="img/game_img/castel.svg" class="p1-castel-img castel-img" onerror="imageNotFound(this,1)" id="castel-img">
 <table id='game-board' class="allSides">
 </table>
+<div style="width: 100%;text-align: center;padding: 20px;position: absolute;">
+  <p class="score-counter badge plr2-counter plr2-counter-mobile">
+    0
+  </p>
+</div>
+
+<img src="img/game_img/castel.svg" class="p2-castel-img castel-img" onerror="imageNotFound(this,1)">
+
+
+<p class="score-counter badge plr1-counter active-score plr1-counter-pc">0</p>
+<p class="score-counter badge plr2-counter plr2-counter-pc">0</p>
+ 
+<!-- <footer class="game-footer"></footer>  -->
+
 
 <audio id="introSound" src="/sound/intro.mp3"></audio>
 <audio id="putSound" src="/sound/put.mp3"></audio>
 <audio id="diceRollSound" src="/sound/dice_roll.mp3"></audio>
 <audio id="MoveBlockSound" src="/sound/move.mp3"></audio>
-<img src="img/game_img/castel.svg" class="p2-castel-img castel-img">
-<!-- 
-<br>  
-<br>
-<footer class="game-footer"></footer> 
--->
-<script src="https://unpkg.com/notie"></script>
-<script src="js/game.js"></script>
+
+<script src="plugin/js/notie.min.js"></script>
+<script src="LocalStorage/js/GameLocalStorage.js"></script>
 <script src="js/elements.js"></script>
+<script src="js/game.js"></script>
 </body>
 </html>

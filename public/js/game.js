@@ -11,15 +11,19 @@ var valid_y = 0;
 var c_turn = 1;
 var GameStarted = false;
 var introSoundEvent;
-var introSoundPlaying = true;
 var block_moving = false;
-var fx_On = true;
 var dice_rolled = false;
 var filledBlocks = [];
 var move_possible = true;
 var plr1_area = [];
 var plr2_area = [];
+var introSoundPlaying = getGameAudioVarables(1);
+var fx_On = getGameAudioVarables(2);
+
 function initGame(){
+	initLocalVariables();
+	$('.plr1-counter').addClass('active-score');
+	$('.p1-castel-img').addClass('castel-moon-light');
 	$.confirm({
     title: '"The Empire On Dice"',
     content: '',
@@ -32,7 +36,9 @@ function initGame(){
            		$('#drop-block-btn').attr('disabled','true');
               	introSoundEvent = setInterval(function(){
               		$('.castel-img').css('display','inline');
-					$("#introSound")[0].play();
+              		if(introSoundPlaying==true){
+              			$("#introSound")[0].play()	
+              		}
 				}, 10);
             }
           }
@@ -41,7 +47,7 @@ function initGame(){
 }
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
  	var game_row = 25;
-	var game_col = 20;
+	var game_col = 25;
 	createBoard();
 }else{
 	var game_row = 35;
@@ -81,11 +87,15 @@ function isTouchedWithHome(block,plr){
 				if((arr[i] - block) < 0 ){
 					flag = false;
 					break;
+				}else{
+					flag = true;
 				}
 			}else if((block % game_col) == 0){
 				if((arr[i] - block) > 0 ){
 					flag = false;
 					break;
+				}else{
+					flag = true;
 				}
 			}else{
 				flag = true;
@@ -116,6 +126,19 @@ function createEmpire(x,y,l,b,plr){
 		}
 		y = y+1;
 	}
+	if(plr==1){
+		$('.plr1-counter').text(plr1_area.length);
+		$('.plr1-counter').removeClass('active-score');
+		$('.p1-castel-img').removeClass('castel-moon-light');
+		$('.p2-castel-img').addClass('castel-moon-light');
+		$('.plr2-counter').addClass('active-score');
+	}else if(plr==2){
+		$('.plr2-counter').text(plr2_area.length);
+		$('.plr2-counter').removeClass('active-score')
+		$('.p2-castel-img').removeClass('castel-moon-light');
+		$('.p1-castel-img').addClass('castel-moon-light');;
+		$('.plr1-counter').addClass('active-score');
+	}
 	block_moving = false;
 	dice_rolled = false;
 	$('#roll-block-btn').removeAttr("disabled");
@@ -126,8 +149,6 @@ function createEmpire(x,y,l,b,plr){
 
 
 function CheckEmpire(x,y,l,b,key_state,plr){
-	$('td').removeClass('active-blocks');
-	$('.placed-block').css('opacity','0.5');
 	if(fx_On){
     	$("#MoveBlockSound")[0].play();
     }
@@ -140,7 +161,7 @@ function CheckEmpire(x,y,l,b,key_state,plr){
 				c_y_2 = y+1;
 			}
 			c_turn = plr;
-			notie.alert({ type: plr+2, text: 'Its not a possible move ('+plr+')', time: 2 });
+			notie.alert({ type: plr+2, text: 'Its not a possible move', time: 2 });
 			return;
 		}
 	}else if(key_state==1){ //down
@@ -151,7 +172,7 @@ function CheckEmpire(x,y,l,b,key_state,plr){
 				c_y_2 = y - 1;
 			}
 			c_turn = plr;
-			notie.alert({ type: plr+2, text: 'Its not a possible move ('+plr+')', time: 2 });
+			notie.alert({ type: plr+2, text: 'Its not a possible move', time: 2 });
 			return;
 		}
 	}else if(key_state==2){ //left
@@ -162,7 +183,7 @@ function CheckEmpire(x,y,l,b,key_state,plr){
 				c_x_2 = x+1;
 			}
 			c_turn = plr;
-			notie.alert({ type: plr+2, text: 'Its not a possible move ('+plr+')', time: 2 });
+			notie.alert({ type: plr+2, text: 'Its not a possible move', time: 2 });
 			return;
 		}
 	}else if(key_state==3){
@@ -173,10 +194,14 @@ function CheckEmpire(x,y,l,b,key_state,plr){
 				c_x_2 = x-1;
 			}
 			c_turn = plr;
-			notie.alert({ type: plr+2, text: 'Its not a possible move ('+plr+')', time: 2 });
+			notie.alert({ type: plr+2, text: 'Its not a possible move', time: 2 });
 			return;
 		}
 	}
+
+	$('td').removeClass('active-blocks');
+	$('.placed-block').css('opacity','0.5');
+
 	$('#drop-block-btn').removeAttr("disabled");
 	block_moving = true;
 	$('td').removeClass('check-location-1');
@@ -491,15 +516,22 @@ function actionOnEvents(key){
 	}else if( key == '80' && GameStarted ){
 		if(introSoundPlaying){
 			introSoundPlaying = false;
+			setGameAudioVarables(1,false);
 			clearInterval(introSoundEvent);
     		$("#introSound")[0].pause();
 		}else{
 			introSoundPlaying = true;
+			setGameAudioVarables(1,true);
 			introSoundEvent = setInterval(function(){
 				$("#introSound")[0].play();
 			}, 10);
 		}
 	}else if( key == '70' && GameStarted ){
+		if(fx_On){
+			setGameAudioVarables(2,false);
+		}else{
+			setGameAudioVarables(1,true);
+		}
 		fx_On = fx_On ? false : true;
 	}
 }
@@ -509,19 +541,19 @@ function checkKey(e) {
 	var t_x;
 	var t_y;
     e = e || window.event;
-    if (e.keyCode == '38' && GameStarted) {
+    if ((e.keyCode == '38' || e.keyCode == '87') && GameStarted) {
         // up arrow
         actionOnEvents('38');
     }
-    else if (e.keyCode == '40' && GameStarted) {
+    else if ((e.keyCode == '40' || e.keyCode == '83') && GameStarted) {
         // down arrow
         actionOnEvents('40');
     }
-    else if (e.keyCode == '37' && GameStarted) {
+    else if ((e.keyCode == '37' || e.keyCode == '65')  && GameStarted) {
        	// left arrow
        	actionOnEvents('37');
     }
-    else if (e.keyCode == '39' && GameStarted) {
+    else if ((e.keyCode == '39' || e.keyCode == '68') && GameStarted) {
        // right arrow
        	actionOnEvents('39');
     }
@@ -601,18 +633,8 @@ $('#roll-block-btn').click(()=>{
 	actionOnEvents('82');
 });
 $('#change-music-setting').click(()=>{
-	if(introSoundPlaying){
-		$('#music-setting-img').attr('src','img/game_img/sound-off.svg');
-	}else{
-		$('#music-setting-img').attr('src','img/game_img/sound-on.svg');
-	}
 	actionOnEvents('80');
 });
 $('#change-fx-setting').click(()=>{
-	if(fx_On){
-		$('#fx-setting-img').attr('src','img/game_img/sound-off.svg');
-	}else{
-		$('#fx-setting-img').attr('src','img/game_img/sound-on.svg');
-	}
 	actionOnEvents('70');
 });

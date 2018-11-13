@@ -100,21 +100,17 @@
     }
 }
 .drop-block-btn-style{
-  position: absolute;
-  top: 5px;
-  left: 40%;
+  margin-top:5px;
 }
 
 .roll-block-btn-style{
-  position: absolute;
-  top:5px;
-  right: 40%;
+  margin-top:5px;
 }
 .setting-block-btn-style{
+  margin-top:5px;
+  right: 15px;
   position: absolute;
-  top:5px;
-  right: 0;
-  margin-right: 2px;
+  top:0;
 }
 
 table { 
@@ -129,8 +125,8 @@ table {
 }
 
 #game-board tr td { 
-  width: 18px; 
-  height: 18px; 
+  width: 15px; 
+  height: 15px; 
   border:1px solid #ddd;
 }
 
@@ -158,21 +154,24 @@ table {
 }
 @media(max-width: 768px){
   #game-board tr td { 
-    width: 17px; 
-    height: 17px; 
+    width: 15px; 
+    height: 15px; 
   }
   #game-board { 
     margin: 0 auto; 
   }
   .drop-block-btn-style{
-    left: 20%;
+    margin-top:5px;
   }
+
   .roll-block-btn-style{
-    right: 20%;
+    margin-top:5px;
   }
   .setting-block-btn-style{
-    right: 0;
-    margin-right: 2px;
+    margin-top:5px;
+    right: 15px;
+    position: absolute;
+    top:0;
   }
 
 }

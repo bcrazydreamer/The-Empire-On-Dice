@@ -35,7 +35,22 @@
 }
 .castel-img{
 	display: none;
+    border-radius: 50% 50% 10px 10px;
 	animation: zooming-castel 1s linear;
+}
+.castel-moon-light{
+    box-shadow:0 3px 100px 0 rgba(255,255,255,.5);
+}
+.game-btns{
+    color: #ffffff;
+    border:2px solid #fff;
+    background: rgba(0,0,0,0.3);
+    border-color: #ffffff;
+}
+.game-btns:hover{
+    color: #ffffff;
+    background: rgba(255,255,255,.2);
+    border-color: #ffffff;
 }
 .p1-castel-img{
 	height: 150px;
@@ -45,13 +60,48 @@
 .p2-castel-img{
 	height: 150px;
 	width: 150px;
-	bottom: 30px;
+	top: 480px;
 	right:0;
 	position: absolute;	
 }
 .sound-setting-icon{
     height: 20px;
     width: 20px;
+}
+.score-counter{
+    font-size: 400%;
+    border: 4px solid transparent;
+    font-family: 'Orbitron', sans-serif;
+}
+.plr1-counter-pc{
+    top:40%;
+    color: white;
+    background: red;
+    left: 10%;
+    position: absolute;
+}
+.plr2-counter-pc{
+    top:40%;
+    color: white;
+    background: blue;
+    right: 10%;
+    position: absolute;
+}
+.plr1-counter-mobile{
+    color: red !important;
+    display: none;
+    padding-top:3%;
+    background: white;
+}
+.plr2-counter-mobile{
+    color: blue !important;
+    display: none;
+    padding-top:3%;
+    background: white;
+}
+.active-score{
+    border:3px solid yellow;
+    box-shadow:0 3px 100px 0 rgba(255,255,255,.8);
 }
 @media(max-width: 768px){
 	.p1-castel-img{
@@ -62,9 +112,26 @@
 	.p2-castel-img{
 		height: 50px;
 		width: 50px;
+        top:0;
 		bottom: 0px;
 		float: right;
 		position: relative;
 	}
-
+    .score-counter{
+        font-size: 150%;
+        color: white;
+        font-family: 'Orbitron', sans-serif;
+    }
+    .plr2-counter-pc{
+        display: none;
+    }
+    .plr1-counter-pc{
+        display: none;
+    }
+    .plr1-counter-mobile{
+        display: inline;
+    }
+    .plr2-counter-mobile{
+        display: inline;
+    }
 }
