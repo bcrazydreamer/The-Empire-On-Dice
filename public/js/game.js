@@ -355,14 +355,23 @@ function showValues(ln,bn){
 	c_y_2 = game_row-ln;
 	$.alert({
 		backgroundDismiss: 'buttonName',
-	    title: 'Value of ractangle',
-	    content: 'length is :'+ln+'&nbsp;&nbsp;breadth is :'+bn,
+	    title: '',
+	    content: '<center>\
+	    		  <p class="show-value-pop-head">Ractangle</p>\
+	    		  <img src="img/game_img/icon.png" alt="Values" onerror="imageNotFound(this,3)" class="img-in-roll-pop" />\
+	    		  </center>\
+	    		  <div style="text-align:center">\
+	    		  <p class="show-value-pop-txt">length is :'+ln+'<br/>breadth is :'+bn+'</p>\
+	    		  </div>',
 	});
 }
 
 
 function actionOnEvents(key){
-	if( key  == '38' && GameStarted && dice_rolled ){
+	var dice_rolling_on = document.getElementById('dice-div-second').style.display!='block';
+	var pop_closed = ($('.jconfirm-light').length==1) ? false : true;
+
+	if( key  == '38' && GameStarted && dice_rolled && pop_closed && dice_rolling_on){
 		 // up arrow
         key_state = 0;
         if(c_turn == 1){
@@ -394,7 +403,7 @@ function actionOnEvents(key){
 	        	new_turn_2 = false;
 	        }
         }
-	}else if( key == '40' && GameStarted && dice_rolled ){
+	}else if( key == '40' && GameStarted && dice_rolled && pop_closed && dice_rolling_on ){
 		// down arrow
         key_state = 1;
 	    if(c_turn == 1){
@@ -426,7 +435,7 @@ function actionOnEvents(key){
 	        	new_turn_2 = false;
 	        }
 	    }
-	}else if( key == '37' && GameStarted && dice_rolled){
+	}else if( key == '37' && GameStarted && dice_rolled && pop_closed ){
 		// left arrow
        	key_state = 2;
        	if(c_turn == 1){
@@ -458,7 +467,7 @@ function actionOnEvents(key){
 	        	new_turn_2 = false;
 	        }
 	    }
-	}else if( key == '39' && GameStarted && dice_rolled){
+	}else if( key == '39' && GameStarted && dice_rolled && pop_closed && dice_rolling_on ){
 		// right arrow
        	key_state = 3;
        	if(c_turn == 1){
@@ -490,7 +499,7 @@ function actionOnEvents(key){
 	        	new_turn_2 = false;
 	        }
 	    }	
-	}else if( key == '82' && GameStarted && (!dice_rolled)){
+	}else if( key == '82' && GameStarted && (!dice_rolled) && pop_closed && dice_rolling_on){
 		$('.dice-main-body').css('display','block');
     	roll_dise();
     	t1 = l = (Math.floor(Math.random() * 6) + 1);
@@ -540,28 +549,29 @@ document.onkeydown = checkKey;
 function checkKey(e) {
 	var t_x;
 	var t_y;
+	var pop_closed = ($('.jconfirm-light').length==1) ? false : true;
     e = e || window.event;
-    if ((e.keyCode == '38' || e.keyCode == '87') && GameStarted) {
+    if ((e.keyCode == '38' || e.keyCode == '87') && GameStarted && pop_closed) {
         // up arrow
         actionOnEvents('38');
     }
-    else if ((e.keyCode == '40' || e.keyCode == '83') && GameStarted) {
+    else if ((e.keyCode == '40' || e.keyCode == '83') && GameStarted && pop_closed) {
         // down arrow
         actionOnEvents('40');
     }
-    else if ((e.keyCode == '37' || e.keyCode == '65')  && GameStarted) {
+    else if ((e.keyCode == '37' || e.keyCode == '65')  && GameStarted && pop_closed) {
        	// left arrow
        	actionOnEvents('37');
     }
-    else if ((e.keyCode == '39' || e.keyCode == '68') && GameStarted) {
+    else if ((e.keyCode == '39' || e.keyCode == '68') && GameStarted && pop_closed) {
        // right arrow
        	actionOnEvents('39');
     }
-    else if (e.keyCode==82 && GameStarted) {
+    else if (e.keyCode==82 && GameStarted && pop_closed) {
     	//roll the dice (r)
     	actionOnEvents('82');	
     }
-    else if(e.keyCode==13 && GameStarted){
+    else if(e.keyCode==13 && GameStarted && pop_closed){
     	//enter and for drop the blocks
     	actionOnEvents('13');
     }

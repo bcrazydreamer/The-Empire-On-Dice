@@ -152,6 +152,8 @@ table {
   transition:all 0.5s ease-in-out;
   animation:blink-element normal 2.0s infinite ease-in-out;
 }
+.placed-block{
+}
 @media(max-width: 768px){
   #game-board tr td { 
     width: 15px; 

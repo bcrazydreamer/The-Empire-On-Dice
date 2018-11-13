@@ -101,7 +101,12 @@ function saveElementsImagesInLocal(){
 		base64Data = getBase64(castel_image_element);
 		localStorage.setItem('castel_image',base64Data);
 	}
-	
+	if((localStorage.getItem('logo') == "null") || (localStorage.getItem('logo') == null) || (localStorage.getItem('logo') == undefined)){
+		image = document.createElement("IMG");
+		image.setAttribute("src", "img/game_img/icon.png");
+		base64Data = getBase64(image);
+		localStorage.setItem('logo',base64Data);
+	}
 }
 
 function imageNotFound(e,type){
@@ -117,5 +122,7 @@ function imageNotFound(e,type){
 				e.src = localStorage.getItem('sound_off');
 			}
 		}
+	}else if(type==3){
+		e.src = localStorage.getItem('castel_image');
 	}
 }
