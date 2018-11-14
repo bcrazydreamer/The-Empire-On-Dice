@@ -4,6 +4,7 @@ var c_x_2;
 var c_y_2;
 var l;
 var b;
+var plr2_first_init_move = true; //to init the position of plr2
 var new_turn_1 = true;
 var new_turn_2 = true;
 var valid_x = 0;
@@ -14,12 +15,33 @@ var introSoundEvent;
 var block_moving = false;
 var dice_rolled = false;
 var filledBlocks = [];
+var allBlocks = [];
 var move_possible = true;
 var plr1_area = [];
 var plr2_area = [];
+var plr1_border = [];
+var plr2_border = [];
 var introSoundPlaying = getGameAudioVarables(1);
 var fx_On = getGameAudioVarables(2);
 
+function showWinner(plr){
+	if(plr==3){
+		msg = 'Its draw';
+	}else{
+		msg = 'Player '+plr+' win';
+	}
+	$.alert({
+		backgroundDismiss: 'buttonName',
+	    title: '',
+	    content: '<center>\
+	    		  <img src="img/game_img/winner.gif" alt="Values" class="img-in-roll-pop1" />\
+	    		  <img src="img/game_img/castel.svg" alt="Values" class="img-in-roll-pop" />\
+	    		  </center>\
+	    		  <div style="text-align:center">\
+	    		  <p class="show-value-pop-txt">'+msg+'</p>\
+	    		  </div>',
+	});
+}
 function initGame(){
 	initLocalVariables();
 	$('.plr1-counter').addClass('active-score');
@@ -59,15 +81,16 @@ function initGameVariables(){
 	b = 4;
 	c_x_1 = 0;
 	c_y_1 = 0;
-	c_x_2 = game_col-b;
-	c_y_2 = game_row-l;
+	c_x_2 = game_col;
+	c_y_2 = game_row;
 }
 function createBoard(){
 	initGameVariables();
 	var space = 1;
 	for (var r=0; r<game_row; r++) {
 	  var col = "";
-	  for (var c=0; c<game_col; c++) { 
+	  for (var c=0; c<game_col; c++) {
+	  	allBlocks.push(space); 
 	    col += "<td data-pos='"+space+"' class='allSidesSoft'></td>"; space++; 
 	  }
 	  $("#game-board").append("<tr>"+col+"</tr>");
@@ -106,6 +129,79 @@ function isTouchedWithHome(block,plr){
 	return flag;
 }
 
+function isBorderBlock(block,plr){ //border ko check karega
+	if(block % game_col != 0){
+		if(allBlocks.indexOf(block+1)>=0){
+			return true;
+		}else if((allBlocks.indexOf(block-1)>=0) && ((block-1) % game_col != 0)){
+			return true;
+		}
+	}else{
+		if(allBlocks.indexOf(block-1)>=0){
+			return true;
+		}
+	}
+	dif = Math.abs(block-game_col);
+	if(block>25){
+		if(allBlocks.indexOf(dif)>=0){
+			return true;
+		}
+	}
+	sum = block+game_col;
+	if(allBlocks.indexOf(sum)>=0){
+		return true;
+	}
+	return false;
+}
+
+function isWinner(plr){
+	var flag = true;
+	if(allBlocks.length==0){
+		if(plr1_area.length > plr2_area.length){
+			showWinner(1);
+		}else if(plr1_area.length < plr2_area.length){
+			showWinner(1);
+		}else{
+			showWinner(3);
+		}
+	}else{
+		var arr = (plr==1) ? plr2_border : plr1_border;
+		for(var i=0 ; i<arr.length ; i++){
+			if(isBorderBlock(arr[i])){
+				flag = false;
+				break;
+			}
+		}if(arr.length==0){
+			flag=false;
+		}
+	}
+	if(flag){
+		showWinner(plr);
+	}else{
+		return flag;
+	}
+}
+
+
+/*---Pending------*/
+function checkBlocksPossible(block,ll,bb){
+	for(var i = 0 ; i < bb ; i++){
+
+	}
+}
+function movePossible(plr,ll,bb){
+	var arr = (plr==1) ? plr1_border : plr2_border;
+	var flag = false;
+	for(var i = 0 ; i < arr.length ; i++){
+		if(checkBlocksPossible(arr[i],ll,bb)){
+			flag = true;
+			break;
+		}
+	}
+	return flag
+}
+/*-----------------*/
+
 function createEmpire(x,y,l,b,plr){
 	$('.placed-block').css('opacity','1');
 	color = (plr==1) ? 'red' : 'blue';
@@ -119,6 +215,7 @@ function createEmpire(x,y,l,b,plr){
 			}else{
 				plr2_area.push(inc);
 			}
+    		allBlocks.splice(allBlocks.indexOf(inc), 1);
 			element = $('td[data-pos="'+inc+'"]');
 			element.addClass('placed-block');
 			element.addClass(block_owner);
@@ -126,25 +223,39 @@ function createEmpire(x,y,l,b,plr){
 		}
 		y = y+1;
 	}
-	if(plr==1){
-		$('.plr1-counter').text(plr1_area.length);
-		$('.plr1-counter').removeClass('active-score');
-		$('.p1-castel-img').removeClass('castel-moon-light');
-		$('.p2-castel-img').addClass('castel-moon-light');
-		$('.plr2-counter').addClass('active-score');
-	}else if(plr==2){
-		$('.plr2-counter').text(plr2_area.length);
-		$('.plr2-counter').removeClass('active-score')
-		$('.p2-castel-img').removeClass('castel-moon-light');
-		$('.p1-castel-img').addClass('castel-moon-light');;
-		$('.plr1-counter').addClass('active-score');
+	arr = (plr==1) ? plr1_area : plr2_area;
+	var temp = [];
+	for(var i = 0 ; i < arr.length ; i++ ){
+		if(isBorderBlock(arr[i],plr)){
+			temp.push(arr[i]);
+		}
 	}
-	block_moving = false;
-	dice_rolled = false;
-	$('#roll-block-btn').removeAttr("disabled");
-	$('#drop-block-btn').attr('disabled','true');
-	(plr==1) ? $('.p2_ownr').addClass('active-blocks') : $('.p1_ownr').addClass('active-blocks');
-	(plr==1) ? $('.p1_ownr').removeClass('active-blocks') : $('.p2_ownr').removeClass('active-blocks');
+	if(plr==1){
+		plr1_border = temp;
+	}else if(plr==2){
+		plr2_border = temp;
+	}
+	if(!isWinner(plr)){
+		block_moving = false;
+		dice_rolled = false;
+		if(plr==1){
+			$('.plr1-counter').text(plr1_area.length);
+			$('.plr1-counter').removeClass('active-score');
+			$('.p1-castel-img').removeClass('castel-moon-light');
+			$('.p2-castel-img').addClass('castel-moon-light');
+			$('.plr2-counter').addClass('active-score');
+		}else if(plr==2){
+			$('.plr2-counter').text(plr2_area.length);
+			$('.plr2-counter').removeClass('active-score')
+			$('.p2-castel-img').removeClass('castel-moon-light');
+			$('.p1-castel-img').addClass('castel-moon-light');;
+			$('.plr1-counter').addClass('active-score');
+		}
+		$('#roll-block-btn').removeAttr("disabled");
+		$('#drop-block-btn').attr('disabled','true');
+		(plr==1) ? $('.p2_ownr').addClass('active-blocks') : $('.p1_ownr').addClass('active-blocks');
+		(plr==1) ? $('.p1_ownr').removeClass('active-blocks') : $('.p2_ownr').removeClass('active-blocks');
+	}
 }
 
 
@@ -351,8 +462,13 @@ function roll_dise(){
 function showValues(ln,bn){
 	$('.dice-main-body').css('display','none');
 	$('.dice-dots').remove();
-	c_x_2 = game_col-bn;
-	c_y_2 = game_row-ln;
+	if(plr2_first_init_move){
+		c_x_2 = game_col-bn;
+		c_y_2 = game_row-ln;
+		plr2_first_init_move = false;
+
+	}
+	//movePossible(plr,ln,bn);
 	$.alert({
 		backgroundDismiss: 'buttonName',
 	    title: '',
@@ -502,6 +618,7 @@ function actionOnEvents(key){
 	}else if( key == '82' && GameStarted && (!dice_rolled) && pop_closed && dice_rolling_on){
 		$('.dice-main-body').css('display','block');
     	roll_dise();
+    	//TODO
     	t1 = l = (Math.floor(Math.random() * 6) + 1);
 		t2 = b = (Math.floor(Math.random() * 6) + 1);
 		timer_dice = setTimeout(function(){
