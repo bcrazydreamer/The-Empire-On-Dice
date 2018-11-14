@@ -459,16 +459,13 @@ function roll_dise(){
 	}, 300);
 }
 /*--------------------------------------------------------------------------*/
-function showValues(ln,bn){
+function showValues(ln,bn,plr){
 	$('.dice-main-body').css('display','none');
 	$('.dice-dots').remove();
-	if(plr2_first_init_move){
+	if(plr2_first_init_move && (plr==2)){
 		c_x_2 = game_col-bn;
 		c_y_2 = game_row-ln;
-		plr2_first_init_move = false;
-
 	}
-	//movePossible(plr,ln,bn);
 	$.alert({
 		backgroundDismiss: 'buttonName',
 	    title: '',
@@ -618,7 +615,6 @@ function actionOnEvents(key){
 	}else if( key == '82' && GameStarted && (!dice_rolled) && pop_closed && dice_rolling_on){
 		$('.dice-main-body').css('display','block');
     	roll_dise();
-    	//TODO
     	t1 = l = (Math.floor(Math.random() * 6) + 1);
 		t2 = b = (Math.floor(Math.random() * 6) + 1);
 		timer_dice = setTimeout(function(){
@@ -628,7 +624,7 @@ function actionOnEvents(key){
 			$('.dice-dots').remove();
 			appendInsideDiceDiv(1,d1.code);
 			appendInsideDiceDiv(2,d2.code);
-			showValues(t1,t2);
+			showValues(t1,t2,c_turn);
 		},2000);
 		dice_rolled = true;
 		$('#roll-block-btn').attr('disabled','true');
