@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /js/GameLocalStorage.js
+Disallow: /js/elements.js
+Disallow: /css/board.css
+Disallow: /css/dice.css
+Disallow: /css/game-elements.css

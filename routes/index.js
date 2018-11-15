@@ -7,9 +7,15 @@ var path                  = require('path');
 router.get('/',function(req, res, next) {
     res.render('Index', { title: 'Game'});
 });
-router.get('/googlec2ef99614e6df793.html',function(req, res, next) {
-    res.sendFile('SEO/googlec2ef99614e6df793.html',{ root: './public' });
+
+router.get('/sitemap2018game',function(req, res, next) {
+    res.sendFile('SEO/sitemap.xml',{ root: './public' });
 });
+
+router.get('/robot.txt',function(req, res, next) {
+    res.sendFile('SEO/robot.txt',{ root: './public' });
+});
+
 router.get('/sitemap2018game',function(req, res, next) {
     res.sendFile('SEO/sitemap.xml',{ root: './public' });
 });
