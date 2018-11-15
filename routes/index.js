@@ -8,7 +8,10 @@ router.get('/',function(req, res, next) {
     res.render('Index', { title: 'Game'});
 });
 router.get('/googlec2ef99614e6df793.html',function(req, res, next) {
-    res.sendFile('googlec2ef99614e6df793.html');
+    res.sendFile('SEO/googlec2ef99614e6df793.html',{ root: './public' });
+});
+router.get('/sitemap2018game',function(req, res, next) {
+    res.sendFile('SEO/sitemap.xml',{ root: './public' });
 });
 
 module.exports = router;
