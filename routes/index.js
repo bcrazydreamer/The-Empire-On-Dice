@@ -12,6 +12,10 @@ router.get('/sitemap2018game',function(req, res, next) {
     res.sendFile('SEO/sitemap.xml',{ root: './public' });
 });
 
+router.get('/robots.txt',function(req, res, next) {
+    res.sendFile('SEO/robot.txt',{ root: './public' });
+});
+
 router.get('/robot.txt',function(req, res, next) {
     res.sendFile('SEO/robot.txt',{ root: './public' });
 });
